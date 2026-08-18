@@ -1,0 +1,25 @@
+# Core dependencies
+# Flask or FastAPI for backend API
+flask>=2.3.0
+# Or: fastapi>=0.104.0
+# uvicorn>=0.24.0  # if using FastAPI
+
+# Data processing
+pandas>=2.0.0
+
+# AI/LLM integrations
+openai>=1.0.0
+# langchain>=0.1.0  # if using LangChain
+
+# Scheduling
+schedule>=1.2.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Development
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+pylint>=2.17.0
