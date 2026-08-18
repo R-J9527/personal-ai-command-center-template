@@ -56,10 +56,7 @@ htmlcov/
 
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
 
 # OS
 Thumbs.db
-.DS_Store
 *.local.json

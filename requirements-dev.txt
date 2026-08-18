@@ -1,0 +1,4 @@
+# Optional development-only tools. The renderer itself uses only Python's
+# standard library and has no runtime package dependencies.
+black>=24.0,<27.0
+ruff>=0.6,<1.0

@@ -12,15 +12,16 @@ Fixes # (issue number, if applicable)
 ## How Has This Been Tested?
 Please describe the tests that you ran to verify your changes.
 
-- [ ] Test A
-- [ ] Test B
+- [ ] Python scripts compile
+- [ ] Example data renders a non-empty dashboard
+- [ ] Generated dashboard contains no unresolved `__WORKBENCH_DATA__` marker
+- [ ] Browser behavior was checked when HTML/CSS/JavaScript changed
 
 ## Checklist
 - [ ] My code follows the code style guidelines
 - [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] My changes generate no new warnings
-- [ ] I have not reduced the test coverage
+- [ ] I have not committed personal workspace data, credentials, or identifiers
+- [ ] I have not added speculative dependencies or unsupported capability claims
 - [ ] I have updated the documentation accordingly (if needed)
 
 ## Additional Context
