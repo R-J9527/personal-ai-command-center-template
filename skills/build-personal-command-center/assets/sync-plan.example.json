@@ -1,0 +1,21 @@
+{
+  "timezone": "Asia/Shanghai",
+  "reminders": [
+    {
+      "id": "sample-work-project-request-quote",
+      "title": "15:00 | Example work project | Request missing quote",
+      "due": "2026-01-15T15:00:00+08:00",
+      "notes": "Owner: Example Owner\nDuration: 20 minutes\nDone: Supplier confirms a response time",
+      "completed": false
+    }
+  ],
+  "events": [
+    {
+      "id": "sample-work-project-checkpoint",
+      "title": "Example project checkpoint",
+      "start": "2026-01-16T10:00:00+08:00",
+      "end": "2026-01-16T10:30:00+08:00",
+      "notes": "Confirmed event only"
+    }
+  ]
+}

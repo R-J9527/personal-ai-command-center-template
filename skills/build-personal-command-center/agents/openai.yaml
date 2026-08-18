@@ -1,0 +1,4 @@
+interface:
+  display_name: "Personal Command Center"
+  short_description: "Deploy and maintain a private AI personal workbench"
+  default_prompt: "Use $build-personal-command-center to deploy my private workbench and guide me through onboarding."

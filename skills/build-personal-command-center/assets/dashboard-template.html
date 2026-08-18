@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Command Center</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --nav: light-dark(#102b4e, #08172a);
+      --nav-hover: light-dark(#1c436f, #132b47);
+      --gold: light-dark(#f5c242, #ffd166);
+      --link: light-dark(#0877b9, #72c4f2);
+      --page: light-dark(#f7f9fb, #0d141d);
+      --surface: light-dark(#ffffff, #15202c);
+      --soft: light-dark(#f1f5f8, #1e2b37);
+      --text: light-dark(#23364a, #edf4f9);
+      --muted: light-dark(#68798a, #aab8c4);
+      --border: light-dark(#d2dce5, #344758);
+      --red: light-dark(#b43a32, #ff8d86);
+      --yellow: light-dark(#a26600, #ffc767);
+      --green: light-dark(#24784a, #65d394);
+      --shadow: light-dark(0 7px 22px rgba(16,43,78,.09), 0 9px 26px rgba(0,0,0,.30));
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--text); font-family: Lato, "Avenir Next", "Helvetica Neue", Arial, "PingFang SC", sans-serif; }
+    button, a { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .shell { min-height: 100vh; display: grid; grid-template-columns: 78px minmax(0,1fr); }
+    .global { background: linear-gradient(180deg, var(--nav), color-mix(in srgb, var(--nav) 88%, black)); color: white; box-shadow: 3px 0 12px rgba(16,43,78,.14); }
+    .brand { height: 72px; display: grid; place-items: center; color: var(--gold); border-bottom: 1px solid rgba(255,255,255,.14); font-weight: 500; }
+    .nav-button { width: 100%; min-height: 66px; border: 0; border-left: 3px solid transparent; background: transparent; color: inherit; display: grid; place-items: center; gap: 4px; padding: 8px 3px; cursor: pointer; }
+    .nav-button:hover { background: var(--nav-hover); }
+    .nav-button[aria-pressed="true"] { color: var(--nav); border-left-color: var(--gold); background: var(--surface); }
+    .nav-icon { color: var(--gold); font-size: 20px; }
+    .nav-button[aria-pressed="true"] .nav-icon { color: var(--nav); }
+    .app { min-width: 0; }
+    .topbar { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 0 26px; border-bottom: 1px solid var(--border); background: var(--surface); box-shadow: 0 2px 8px rgba(16,43,78,.07); }
+    .crumb, .updated { color: var(--muted); }
+    .content { max-width: 1180px; margin: 0 auto; padding: 30px 34px 44px; }
+    .heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    h1, h2, h3 { font-weight: 400; }
+    h1 { margin: 0; }
+    h2 { margin: 0 0 12px; }
+    h3 { margin: 0 0 8px; }
+    .muted { color: var(--muted); }
+    .today-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; margin-top: 20px; }
+    .panel { border: 1px solid var(--border); border-radius: 7px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .panel-head { display: flex; justify-content: space-between; gap: 12px; padding: 13px 15px; border-bottom: 1px solid var(--border); background: var(--soft); }
+    .focus { padding: 16px; }
+    .focus-label { color: var(--muted); }
+    .focus-title { margin-top: 5px; font-size: 19px; font-weight: 500; }
+    .push { padding: 10px 0; border-top: 1px solid var(--border); }
+    .push:first-child { border-top: 0; }
+    .upcoming { padding: 0 16px; }
+    .upcoming-row { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .upcoming-row:last-child { border-bottom: 0; }
+    .status-summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 20px; }
+    .summary { padding: 14px 16px; border: 1px solid var(--border); border-top: 3px solid var(--status); border-radius: 6px; background: var(--surface); box-shadow: var(--shadow); }
+    .summary strong { display: block; color: var(--status); font-size: 22px; font-weight: 500; }
+    .status-board { margin-top: 16px; }
+    .status-group + .status-group { border-top: 1px solid var(--border); }
+    .status-head { display: flex; justify-content: space-between; gap: 10px; padding: 12px 15px; background: linear-gradient(90deg, color-mix(in srgb, var(--status) 9%, var(--surface)), var(--soft)); }
+    .project-row { width: 100%; display: grid; grid-template-columns: minmax(150px,.55fr) minmax(0,1fr) 90px; gap: 14px; align-items: center; padding: 13px 15px; border: 0; border-top: 1px solid var(--border); background: var(--surface); color: var(--text); text-align: left; cursor: pointer; }
+    .project-row:hover { background: var(--soft); box-shadow: inset 3px 0 0 var(--status); }
+    .project-name { color: var(--link); font-weight: 500; }
+    .section-space { margin-top: 22px; }
+    .back { margin-bottom: 18px; border: 1px solid var(--border); border-radius: 5px; padding: 8px 12px; background: var(--surface); color: var(--text); cursor: pointer; }
+    .detail-head { padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .status-line { display: flex; align-items: center; gap: 8px; margin-top: 9px; color: var(--status); font-weight: 500; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--status); }
+    .detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 28px; padding: 22px 0; }
+    .detail-item span { display: block; margin-bottom: 5px; color: var(--muted); }
+    .links { display: grid; gap: 8px; padding-top: 10px; }
+    .link { display: flex; justify-content: space-between; gap: 12px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--link); text-decoration: none; }
+    .link:hover { background: var(--soft); }
+    [hidden] { display: none !important; }
+    @media (max-width: 720px) {
+      .shell { grid-template-columns: 1fr; }
+      .global { display: flex; overflow-x: auto; }
+      .brand, .nav-button { min-width: 62px; min-height: 58px; height: 58px; }
+      .nav-button { border-left: 0; border-bottom: 3px solid transparent; }
+      .nav-button[aria-pressed="true"] { border-bottom-color: var(--gold); }
+      .content { padding: 20px 14px 34px; }
+      .topbar { padding: 0 14px; }
+      .today-grid, .detail-grid { grid-template-columns: 1fr; }
+      .project-row { grid-template-columns: 1fr; gap: 5px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <div class="shell" id="command-center">
+    <nav class="global" aria-label="Primary">
+      <div class="brand">AI</div>
+      <button class="nav-button" data-view="dashboard" aria-pressed="true"><span class="nav-icon">⌂</span><span>Today</span></button>
+      <button class="nav-button" data-view="work" aria-pressed="false"><span class="nav-icon">▣</span><span>Work</span></button>
+      <button class="nav-button" data-view="life" aria-pressed="false"><span class="nav-icon">◇</span><span>Life</span></button>
+    </nav>
+    <div class="app">
+      <header class="topbar"><div class="crumb" id="crumb">/ Today</div><div class="updated" id="updated"></div></header>
+      <main class="content">
+        <section id="dashboard-view">
+          <div class="heading"><div><h1 id="welcome"></h1><div class="muted">One result, two pushes, and room for real life.</div></div><div class="muted" id="buffer"></div></div>
+          <div class="today-grid">
+            <section class="panel"><div class="panel-head"><strong>Today's focus</strong><span>1 + 2</span></div><div class="focus" id="focus"></div></section>
+            <section class="panel"><div class="panel-head"><strong>Upcoming</strong><span>Confirmed</span></div><div class="upcoming" id="upcoming"></div></section>
+          </div>
+          <div class="status-summary" id="summary"></div>
+          <section class="panel status-board" id="status-board"></section>
+        </section>
+        <section id="list-view" hidden>
+          <div class="heading"><div><h1 id="list-title"></h1><div class="muted">Projects are sorted red, yellow, then green.</div></div></div>
+          <section class="panel section-space" id="project-list"></section>
+        </section>
+        <section id="detail-view" hidden>
+          <button class="back" id="back">← Back to projects</button>
+          <div id="detail"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script>
+    const data = __WORKBENCH_DATA__;
+    const root = document.getElementById('command-center');
+    const meta = {
+      red: { label: 'Red · Needs intervention', color: 'var(--red)' },
+      yellow: { label: 'Yellow · Bounded wait', color: 'var(--yellow)' },
+      green: { label: 'Green · Verified progress', color: 'var(--green)' }
+    };
+    const order = { red: 0, yellow: 1, green: 2 };
+    let activeSpace = 'work';
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>'"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[char]);
+    }
+    function sorted(projects) { return [...projects].sort((a,b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name)); }
+    function projectRows(projects) {
+      return sorted(projects).map(project => `<button class="project-row" style="--status:${meta[project.status].color}" data-project="${escapeHtml(project.id)}"><span class="project-name">${escapeHtml(project.name)}</span><span class="muted">${escapeHtml(project.status_reason)}</span><span class="muted">${escapeHtml(project.owner)}</span></button>`).join('');
+    }
+    function bindProjectLinks(container) {
+      container.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => showDetail(button.dataset.project)));
+    }
+    function renderDashboard() {
+      document.getElementById('welcome').textContent = `${data.profile.name}'s command center`;
+      document.getElementById('updated').textContent = `Updated ${data.updated_at}`;
+      document.getElementById('buffer').textContent = `${data.today.buffer_percent}% buffer`;
+      const core = data.today.core_result;
+      const pushes = data.today.important_pushes || [];
+      document.getElementById('focus').innerHTML = core ? `<div class="focus-label">Core result</div><div class="focus-title">${escapeHtml(core.title)}</div><div class="muted">${escapeHtml(core.done_criteria)}</div>${pushes.map(item => `<div class="push"><strong>${escapeHtml(item.title)}</strong><div class="muted">${item.duration_minutes} min · ${escapeHtml(item.done_criteria)}</div></div>`).join('')}` : '<div class="muted">No core result set.</div>';
+      const upcoming = (data.upcoming || []).filter(item => item.confirmed);
+      document.getElementById('upcoming').innerHTML = upcoming.length ? upcoming.map(item => `<div class="upcoming-row"><span class="muted">${escapeHtml(item.date)}<br>${escapeHtml(item.time)}</span><span>${escapeHtml(item.title)}</span></div>`).join('') : '<div class="focus muted">No confirmed events.</div>';
+      const statuses = ['red','yellow','green'];
+      document.getElementById('summary').innerHTML = statuses.map(status => `<div class="summary" style="--status:${meta[status].color}"><strong>${data.projects.filter(project => project.status === status).length}</strong><span>${meta[status].label}</span></div>`).join('');
+      const board = document.getElementById('status-board');
+      board.innerHTML = statuses.map(status => { const projects = data.projects.filter(project => project.status === status); return `<section class="status-group" style="--status:${meta[status].color}"><div class="status-head"><strong>${meta[status].label}</strong><span>${projects.length}</span></div>${projectRows(projects)}</section>`; }).join('');
+      bindProjectLinks(board);
+    }
+    function show(view) {
+      document.getElementById('dashboard-view').hidden = view !== 'dashboard';
+      document.getElementById('list-view').hidden = view === 'dashboard';
+      document.getElementById('detail-view').hidden = true;
+      root.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
+      if (view === 'dashboard') { document.getElementById('crumb').textContent = '/ Today'; renderDashboard(); return; }
+      activeSpace = view;
+      document.getElementById('crumb').textContent = `/ ${view === 'work' ? 'Work' : 'Life'}`;
+      document.getElementById('list-title').textContent = view === 'work' ? 'Work projects' : 'Life projects';
+      const list = document.getElementById('project-list');
+      list.innerHTML = projectRows(data.projects.filter(project => project.space === view)) || '<div class="focus muted">No projects yet.</div>';
+      bindProjectLinks(list);
+    }
+    function showDetail(projectId) {
+      const project = data.projects.find(item => item.id === projectId);
+      if (!project) return;
+      activeSpace = project.space;
+      document.getElementById('dashboard-view').hidden = true;
+      document.getElementById('list-view').hidden = true;
+      document.getElementById('detail-view').hidden = false;
+      root.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === project.space)));
+      document.getElementById('crumb').textContent = `/ ${project.space === 'work' ? 'Work' : 'Life'} / ${project.name}`;
+      const links = project.links || [];
+      document.getElementById('detail').innerHTML = `<div class="detail-head"><h1>${escapeHtml(project.name)}</h1><div class="muted">Owner: ${escapeHtml(project.owner)} · Due: ${escapeHtml(project.due)}</div><div class="status-line" style="--status:${meta[project.status].color}"><span class="dot"></span>${meta[project.status].label}: ${escapeHtml(project.status_reason)}</div></div><div class="section-space"><h2>Overview</h2><div>${escapeHtml(project.summary)}</div></div><div class="detail-grid"><div class="detail-item"><span>Next action</span>${escapeHtml(project.next_action)}</div><div class="detail-item"><span>Next check</span>${escapeHtml(project.check_date)}</div><div class="detail-item"><span>Blocker</span>${escapeHtml(project.blocker)}</div><div class="detail-item"><span>Pending decision</span>${escapeHtml(project.decision)}</div><div class="detail-item"><span>Completion standard</span>${escapeHtml(project.done_criteria)}</div><div class="detail-item"><span>Space</span>${project.space === 'work' ? 'Work' : 'Life'}</div></div><div class="section-space"><h2>Resources</h2><div class="links">${links.length ? links.map(link => `<a class="link" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer"><span>${escapeHtml(link.title)}</span><span>↗</span></a>`).join('') : '<div class="muted">No linked resources.</div>'}</div></div>`;
+    }
+    root.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => show(button.dataset.view)));
+    document.getElementById('back').addEventListener('click', () => show(activeSpace));
+    renderDashboard();
+  </script>
+</body>
+</html>

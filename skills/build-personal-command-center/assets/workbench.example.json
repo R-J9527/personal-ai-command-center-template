@@ -1,0 +1,79 @@
+{
+  "profile": {
+    "name": "Example User",
+    "timezone": "Asia/Shanghai",
+    "check_in_time": "09:00",
+    "wake_time": "07:30",
+    "sleep_time": "23:30"
+  },
+  "today": {
+    "core_result": {
+      "title": "Confirm the launch checklist",
+      "project_id": "sample-work-project",
+      "due": "2026-01-15T12:00:00+08:00",
+      "duration_minutes": 60,
+      "done_criteria": "Checklist approved and owners confirmed"
+    },
+    "important_pushes": [
+      {
+        "title": "Request the missing supplier quote",
+        "project_id": "sample-work-project",
+        "due": "2026-01-15T15:00:00+08:00",
+        "duration_minutes": 20,
+        "done_criteria": "Supplier acknowledges the request and gives a reply time"
+      },
+      {
+        "title": "Confirm the weekend family plan",
+        "project_id": "sample-life-project",
+        "due": "2026-01-15T18:00:00+08:00",
+        "duration_minutes": 15,
+        "done_criteria": "Time and location agreed"
+      }
+    ],
+    "buffer_percent": 30
+  },
+  "projects": [
+    {
+      "id": "sample-work-project",
+      "space": "work",
+      "name": "Example work project",
+      "summary": "A neutral example that must be replaced during deployment.",
+      "status": "red",
+      "status_reason": "A required quote is missing before a near-term checkpoint.",
+      "owner": "Example Owner",
+      "next_action": "Request the missing quote and confirm a response time.",
+      "due": "2026-01-16T17:00:00+08:00",
+      "blocker": "Waiting for supplier quote",
+      "decision": "Choose a supplier after the quote arrives",
+      "done_criteria": "Supplier selected with price and delivery date recorded",
+      "check_date": "2026-01-15",
+      "links": []
+    },
+    {
+      "id": "sample-life-project",
+      "space": "life",
+      "name": "Example life project",
+      "summary": "A neutral example that must be replaced during deployment.",
+      "status": "yellow",
+      "status_reason": "Waiting is bounded and the next check date is known.",
+      "owner": "Example User",
+      "next_action": "Confirm the weekend time and location.",
+      "due": "2026-01-17T12:00:00+08:00",
+      "blocker": "none",
+      "decision": "Select one of two available times",
+      "done_criteria": "Time and location agreed",
+      "check_date": "2026-01-15",
+      "links": []
+    }
+  ],
+  "upcoming": [
+    {
+      "date": "2026-01-16",
+      "time": "10:00",
+      "title": "Example project checkpoint",
+      "project_id": "sample-work-project",
+      "confirmed": true
+    }
+  ],
+  "updated_at": "2026-01-15T08:30:00+08:00"
+}
