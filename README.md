@@ -29,3 +29,11 @@ For Codex, install or invoke the skill in [`skills/build-personal-command-center
 ## Privacy
 
 Never commit a deployed user's `workspace/`, personal links, contacts, credentials, calendar identifiers, health data, or private project history. Keep the template and each user's data separate.
+
+## Runtime dependencies
+
+The bundled renderer uses only Python's standard library. No `pip install` is required to render the example or a deployed workbench. Optional formatter and linter dependencies are listed in `requirements-dev.txt` for contributors only.
+
+## License
+
+No open-source license is currently granted. Keep the repository private or obtain an explicit licensing decision from the owner before public distribution or commercial reuse.

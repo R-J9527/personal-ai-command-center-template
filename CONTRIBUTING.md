@@ -1,6 +1,8 @@
 # Contributing to Personal AI Command Center Template
 
-Thank you for your interest in contributing to this project!
+Thank you for helping improve the template. Keep contributions aligned with
+the repository's current scope: a portable specification, a standalone HTML
+dashboard, example data, and a standard-library Python renderer.
 
 ## Getting Started
 
@@ -11,29 +13,48 @@ Thank you for your interest in contributing to this project!
    cd personal-ai-command-center-template
    ```
 
-3. **Create a virtual environment**:
+3. **Optionally create a virtual environment for formatting and linting**:
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   python3 -m pip install -r requirements-dev.txt
    ```
 
-4. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+The renderer has no third-party runtime dependencies.
 
 ## Development Workflow
 
-### Code Style
-- Follow **PEP 8** guidelines
-- Use **Black** for code formatting: `black .`
-- Check code with **Flake8**: `flake8 .`
-- Run **Pylint**: `pylint *.py`
+### Validation
 
-### Testing
-- Write tests for new features
-- Run tests: `pytest`
-- Ensure coverage doesn't decrease
+Run the checks that exist in this repository:
+
+```bash
+python3 -m compileall -q skills/build-personal-command-center/scripts
+
+temp_dir="$(mktemp -d)"
+python3 skills/build-personal-command-center/scripts/render_workbench.py \
+  --data skills/build-personal-command-center/assets/workbench.example.json \
+  --template skills/build-personal-command-center/assets/dashboard-template.html \
+  --output "$temp_dir/personal-command-center.html"
+
+test -s "$temp_dir/personal-command-center.html"
+if grep -q '__WORKBENCH_DATA__' "$temp_dir/personal-command-center.html"; then
+  echo "Unresolved dashboard marker" >&2
+  exit 1
+fi
+```
+
+When the optional development tools are installed, Python changes should also
+pass:
+
+```bash
+black --check skills/build-personal-command-center/scripts
+ruff check skills/build-personal-command-center/scripts
+```
+
+If a contribution adds a new runtime dependency, explain why the standard
+library is insufficient before adding it. If it adds tests, document the real
+test command at the same time.
 
 ### Commits
 - Use clear, descriptive commit messages
@@ -42,10 +63,10 @@ Thank you for your interest in contributing to this project!
 
 ## Submitting a Pull Request
 
-1. Create a feature branch: `git checkout -b feature/your-feature-name`
+1. Create a feature branch: `git switch -c feature/your-feature-name`
 2. Make your changes and commit them
 3. Push to your fork: `git push origin feature/your-feature-name`
-4. Open a Pull Request with:
+4. Open a pull request with:
    - Clear title and description
    - Reference to related issues
    - Screenshots/examples if applicable
@@ -58,10 +79,9 @@ Thank you for your interest in contributing to this project!
 - Calendar identifiers or health data
 - Private project history
 
-## Questions?
+## Scope and licensing
 
-- Check existing [issues](../../issues) and [discussions](../../discussions)
-- Open a new issue for bugs or feature requests
-- Use discussions for questions
+This repository currently does not grant an open-source license. Do not add or
+change licensing terms without the repository owner's explicit approval.
 
-Thank you for contributing! 🎉
+For questions, open an issue without including private workspace data.
