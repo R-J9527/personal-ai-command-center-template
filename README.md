@@ -6,6 +6,8 @@ This repository contains no personal data. Each deployment creates a separate lo
 
 ## Quick start
 
+To preview the complete Canvas-style interface after downloading the repository, open [`demo/personal-command-center.html`](demo/personal-command-center.html). It contains neutral example data only.
+
 Give your AI coding assistant this repository and paste the contents of [`DEPLOY_PROMPT.md`](DEPLOY_PROMPT.md). The assistant will:
 
 1. Ask a short onboarding questionnaire.
@@ -16,6 +18,8 @@ Give your AI coding assistant this repository and paste the contents of [`DEPLOY
 The repository does not carry an active recurring task. Read [`AUTOMATION_SETUP.md`](AUTOMATION_SETUP.md) to create and verify instance-specific scheduling, notifications, and reminder/calendar integrations.
 
 For Codex, install or invoke the skill in [`skills/build-personal-command-center`](skills/build-personal-command-center/SKILL.md).
+
+Do not open `assets/dashboard-template.html` directly. It contains the `__WORKBENCH_DATA__` build marker and must be rendered with a user's structured data. The ready-to-open file in `demo/` shows the same interface using safe example data.
 
 ## Design principles
 

@@ -1,6 +1,6 @@
 {
   "profile": {
-    "name": "Example User",
+    "name": "示例用户",
     "timezone": "Asia/Shanghai",
     "check_in_time": "09:00",
     "wake_time": "07:30",
@@ -8,26 +8,26 @@
   },
   "today": {
     "core_result": {
-      "title": "Confirm the launch checklist",
+      "title": "确认上线清单",
       "project_id": "sample-work-project",
       "due": "2026-01-15T12:00:00+08:00",
       "duration_minutes": 60,
-      "done_criteria": "Checklist approved and owners confirmed"
+      "done_criteria": "清单通过审核并确认所有负责人"
     },
     "important_pushes": [
       {
-        "title": "Request the missing supplier quote",
+        "title": "追问缺失的供应商报价",
         "project_id": "sample-work-project",
         "due": "2026-01-15T15:00:00+08:00",
         "duration_minutes": 20,
-        "done_criteria": "Supplier acknowledges the request and gives a reply time"
+        "done_criteria": "供应商确认收到请求并给出回复时间"
       },
       {
-        "title": "Confirm the weekend family plan",
+        "title": "确认周末家庭安排",
         "project_id": "sample-life-project",
         "due": "2026-01-15T18:00:00+08:00",
         "duration_minutes": 15,
-        "done_criteria": "Time and location agreed"
+        "done_criteria": "时间和地点达成一致"
       }
     ],
     "buffer_percent": 30
@@ -36,32 +36,32 @@
     {
       "id": "sample-work-project",
       "space": "work",
-      "name": "Example work project",
-      "summary": "A neutral example that must be replaced during deployment.",
+      "name": "示例工作项目",
+      "summary": "用于展示模板结构的中性示例，正式部署时必须替换。",
       "status": "red",
-      "status_reason": "A required quote is missing before a near-term checkpoint.",
-      "owner": "Example Owner",
-      "next_action": "Request the missing quote and confirm a response time.",
+      "status_reason": "临近检查节点，但必要报价尚未收到。",
+      "owner": "示例负责人",
+      "next_action": "追问缺失报价并确认回复时间。",
       "due": "2026-01-16T17:00:00+08:00",
-      "blocker": "Waiting for supplier quote",
-      "decision": "Choose a supplier after the quote arrives",
-      "done_criteria": "Supplier selected with price and delivery date recorded",
+      "blocker": "等待供应商报价",
+      "decision": "报价到达后选择供应商",
+      "done_criteria": "供应商已选定，并记录价格与交付日期",
       "check_date": "2026-01-15",
       "links": []
     },
     {
       "id": "sample-life-project",
       "space": "life",
-      "name": "Example life project",
-      "summary": "A neutral example that must be replaced during deployment.",
+      "name": "示例生活项目",
+      "summary": "用于展示模板结构的中性示例，正式部署时必须替换。",
       "status": "yellow",
-      "status_reason": "Waiting is bounded and the next check date is known.",
-      "owner": "Example User",
-      "next_action": "Confirm the weekend time and location.",
+      "status_reason": "等待范围明确，并且已有下次检查日期。",
+      "owner": "示例用户",
+      "next_action": "确认周末活动的时间和地点。",
       "due": "2026-01-17T12:00:00+08:00",
       "blocker": "none",
-      "decision": "Select one of two available times",
-      "done_criteria": "Time and location agreed",
+      "decision": "从两个候选时间中选择一个",
+      "done_criteria": "时间和地点达成一致",
       "check_date": "2026-01-15",
       "links": []
     }
@@ -70,7 +70,7 @@
     {
       "date": "2026-01-16",
       "time": "10:00",
-      "title": "Example project checkpoint",
+      "title": "示例项目检查会",
       "project_id": "sample-work-project",
       "confirmed": true
     }
