@@ -8,6 +8,8 @@
 - `today`: one `core_result`, zero to two `important_pushes`, and `buffer_percent`.
 - `projects`: all work and life projects, including inactive low-priority entries.
 - `upcoming`: confirmed events and hard checkpoints.
+- `collaboration`: shared-center connection state without credentials, remote URLs, or local paths.
+- `shared_tasks`: validated coordination-only task envelopes assigned to this owner.
 - `updated_at`: ISO-8601 timestamp.
 
 ## Project
@@ -44,3 +46,11 @@ Every project requires:
 ## Upcoming
 
 Each entry uses `{date, time, title, project_id, confirmed}`. Only confirmed meetings, travel, construction, or appointments belong here. Unconfirmed items remain reminders to confirm, not events.
+
+## Collaboration
+
+`collaboration` uses `enabled`, `member_id`, `center_status`, `last_sync_at`, and `outbound_status_mode`. Keep repository URLs, checkout paths, credentials, and tokens in private `config/shared-center.json`, never in dashboard data.
+
+## Shared task
+
+Every imported task includes a stable `id`, neutral `title`, `assigner_id`, `assignee_id`, `priority`, workflow `status`, red/yellow/green `health`, `status_reason`, `due`, `next_action`, `blocker`, `done_criteria`, `check_date`, `safe_evidence`, and `confidentiality: coordination_only`. It contains no links or attachments.

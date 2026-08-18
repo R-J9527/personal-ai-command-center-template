@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "member_id": "replace-with-member-id",
+  "checkout_path": "replace-with-private-shared-center-checkout",
+  "remote_repository": "https://github.com/owner/private-shared-center.git",
+  "outbound_status_mode": "confirm_each"
+}

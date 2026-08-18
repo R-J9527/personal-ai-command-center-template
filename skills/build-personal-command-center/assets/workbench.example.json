@@ -75,5 +75,38 @@
       "confirmed": true
     }
   ],
+  "collaboration": {
+    "enabled": true,
+    "member_id": "example-user",
+    "center_status": "connected",
+    "last_sync_at": "2026-01-15T08:25:00+08:00",
+    "outbound_status_mode": "confirm_each"
+  },
+  "shared_tasks": [
+    {
+      "schema_version": 1,
+      "id": "task-example-team-check",
+      "title": "确认共享任务验收时间",
+      "assigner_id": "example-manager",
+      "assignee_id": "example-user",
+      "project_id": "none",
+      "safe_context": "仅包含协调信息的中性示例，正式部署时必须替换。",
+      "priority": "medium",
+      "status": "assigned",
+      "health": "yellow",
+      "status_reason": "任务已派发，等待负责人确认执行时间。",
+      "due": "2026-01-16T18:00:00+08:00",
+      "next_action": "确认可执行时间并反馈状态。",
+      "blocker": "none",
+      "done_criteria": "执行时间、负责人和下一动作已确认。",
+      "check_date": "2026-01-15",
+      "source_reference": "TEAM-TASK-001",
+      "safe_evidence": "none",
+      "confidentiality": "coordination_only",
+      "revision": 1,
+      "updated_at": "2026-01-15T08:25:00+08:00",
+      "updated_by": "example-manager"
+    }
+  ],
   "updated_at": "2026-01-15T08:30:00+08:00"
 }

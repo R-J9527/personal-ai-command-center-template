@@ -27,6 +27,11 @@ REQUIRED_PROJECT_FIELDS = {
     "check_date",
     "links",
 }
+REQUIRED_SHARED_TASK_FIELDS = {
+    "id", "title", "assigner_id", "assignee_id", "safe_context", "priority",
+    "status", "health", "status_reason", "due", "next_action", "blocker",
+    "done_criteria", "check_date", "safe_evidence", "confidentiality",
+}
 
 
 def validate(data: dict[str, Any]) -> None:
@@ -55,6 +60,27 @@ def validate(data: dict[str, Any]) -> None:
             raise ValueError(f"Project {project_id} has invalid space")
         if not isinstance(project["links"], list):
             raise ValueError(f"Project {project_id} links must be a list")
+
+    shared_tasks = data.get("shared_tasks", [])
+    if not isinstance(shared_tasks, list):
+        raise ValueError("shared_tasks must be a list")
+    task_ids: set[str] = set()
+    for index, task in enumerate(shared_tasks):
+        missing = REQUIRED_SHARED_TASK_FIELDS - set(task)
+        if missing:
+            raise ValueError(f"Shared task {index} missing: {', '.join(sorted(missing))}")
+        task_id = task["id"]
+        if not isinstance(task_id, str) or not task_id or task_id in task_ids:
+            raise ValueError(f"Shared task {index} has an invalid or duplicate id")
+        task_ids.add(task_id)
+        if task["health"] not in VALID_STATUSES:
+            raise ValueError(f"Shared task {task_id} has invalid health")
+        if task["confidentiality"] != "coordination_only":
+            raise ValueError(f"Shared task {task_id} is not coordination_only")
+
+    collaboration = data.get("collaboration", {"enabled": False})
+    if not isinstance(collaboration, dict) or not isinstance(collaboration.get("enabled"), bool):
+        raise ValueError("collaboration.enabled must be a boolean")
 
     today = data["today"]
     pushes = today.get("important_pushes", [])

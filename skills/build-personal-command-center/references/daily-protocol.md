@@ -2,7 +2,7 @@
 
 ## Morning check-in
 
-1. Read `outputs/current-state.md` and `data/workbench.json`.
+1. Read `outputs/current-state.md` and `data/workbench.json`. If collaboration is enabled, fetch, validate, and import assigned tasks before displaying status.
 2. Display yesterday's red/yellow/green state and confirmed dates within seven days.
 3. Ask red projects first: latest result, next action, owner, completion time, blocker, decision, today's change, and the smallest action that removes red.
 4. Ask yellow only when its check date is due, a dependency changed, or a new risk appeared.
@@ -18,6 +18,7 @@
 5. Produce rolling three-day and seven-day checkpoints.
 6. Mark items delegated, waiting, deferred, or intentionally not done.
 7. Update JSON, snapshot, append-only ledger, and dashboard together. If one write fails, report the partial state and do not claim full completion.
+8. For shared tasks, keep company context private. Before any outbound status update, show the exact coordination-only envelope and wait for explicit confirmation.
 
 ## Evening close
 

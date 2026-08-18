@@ -968,7 +968,7 @@ html>body{padding:0}</style>
 #canvas-lms-project-center .clms-status-project-reason, #canvas-lms-project-center .clms-status-project-space { color: var(--canvas-muted); }
 #canvas-lms-project-center .clms-workspace-links { margin-top: 22px; }
 #canvas-lms-project-center .clms-workspace-links h2 { margin: 0 0 10px; font-weight: 400; }
-#canvas-lms-project-center .clms-workspace-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+#canvas-lms-project-center .clms-workspace-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 #canvas-lms-project-center .clms-workspace-button { appearance: none; border: 1px solid var(--canvas-border); border-left: 4px solid var(--course-color); border-radius: 6px; background: var(--canvas-surface); color: var(--canvas-text); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; cursor: pointer; box-shadow: var(--canvas-shadow-soft); transition: background .16s ease, transform .16s ease; }
 #canvas-lms-project-center .clms-workspace-button:hover { background: var(--canvas-soft); transform: translateY(-1px); }
 #canvas-lms-project-center .clms-workspace-button strong { display: block; color: var(--canvas-link); font-weight: 500; }
@@ -1100,6 +1100,7 @@ html>body{padding:0}</style>
       <button class="clms-global-button" type="button" data-view="dashboard" aria-pressed="true"><i data-lucide="layout-dashboard" aria-hidden="true"></i><span>工作台</span></button>
       <button class="clms-global-button" type="button" data-view="work" aria-pressed="false"><i data-lucide="briefcase-business" aria-hidden="true"></i><span>工作</span></button>
       <button class="clms-global-button" type="button" data-view="life" aria-pressed="false"><i data-lucide="house" aria-hidden="true"></i><span>生活</span></button>
+      <button class="clms-global-button" type="button" data-view="team" aria-pressed="false"><i data-lucide="users-round" aria-hidden="true"></i><span>团队</span></button>
       <button class="clms-global-button" type="button" data-view="calendar" aria-pressed="false"><i data-lucide="calendar-days" aria-hidden="true"></i><span>日历</span></button>
       <button class="clms-global-button" type="button" id="clms-report-nav"><i data-lucide="inbox" aria-hidden="true"></i><span>汇报</span></button>
     </nav>
@@ -1121,6 +1122,7 @@ html>body{padding:0}</style>
             <div class="clms-workspace-buttons">
               <button class="clms-workspace-button" type="button" data-open-course="work" style="--course-color:var(--canvas-work)"><span><strong>工作</strong><span id="clms-work-count"></span></span><i data-lucide="chevron-right" aria-hidden="true"></i></button>
               <button class="clms-workspace-button" type="button" data-open-course="life" style="--course-color:var(--canvas-life)"><span><strong>生活</strong><span id="clms-life-count"></span></span><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+              <button class="clms-workspace-button" type="button" data-open-course="team" style="--course-color:var(--canvas-link)"><span><strong>团队任务</strong><span id="clms-team-count"></span></span><i data-lucide="chevron-right" aria-hidden="true"></i></button>
             </div>
           </section>
         </main>
@@ -1132,7 +1134,7 @@ html>body{padding:0}</style>
 
       <section class="clms-view clms-course-view" id="clms-course-view" hidden>
         <aside class="clms-course-nav"><h2 id="clms-course-nav-title">工作空间</h2><div class="clms-local-nav" id="clms-local-nav"></div></aside>
-        <main class="clms-course-content"><h1 id="clms-course-title">工作</h1><div class="clms-course-subtitle" id="clms-course-subtitle"></div><section class="clms-module"><div class="clms-module-header"><span>项目模块</span><span id="clms-module-count"></span></div><div id="clms-module-list"></div></section></main>
+        <main class="clms-course-content"><h1 id="clms-course-title">工作</h1><div class="clms-course-subtitle" id="clms-course-subtitle"></div><section class="clms-module"><div class="clms-module-header"><span id="clms-module-label">项目模块</span><span id="clms-module-count"></span></div><div id="clms-module-list"></div></section></main>
         <aside class="clms-right"><section><h2>待办事项</h2><div id="clms-course-todos"></div></section><section><h2>即将发生</h2><div id="clms-course-coming"></div></section></aside>
       </section>
 
@@ -1172,7 +1174,7 @@ html>body{padding:0}</style>
 <script>
 (function () {
   const root = document.getElementById('canvas-lms-project-center');
-  const data = {"profile":{"name":"示例用户","timezone":"Asia/Shanghai","check_in_time":"09:00","wake_time":"07:30","sleep_time":"23:30"},"today":{"core_result":{"title":"确认上线清单","project_id":"sample-work-project","due":"2026-01-15T12:00:00+08:00","duration_minutes":60,"done_criteria":"清单通过审核并确认所有负责人"},"important_pushes":[{"title":"追问缺失的供应商报价","project_id":"sample-work-project","due":"2026-01-15T15:00:00+08:00","duration_minutes":20,"done_criteria":"供应商确认收到请求并给出回复时间"},{"title":"确认周末家庭安排","project_id":"sample-life-project","due":"2026-01-15T18:00:00+08:00","duration_minutes":15,"done_criteria":"时间和地点达成一致"}],"buffer_percent":30},"projects":[{"id":"sample-work-project","space":"work","name":"示例工作项目","summary":"用于展示模板结构的中性示例，正式部署时必须替换。","status":"red","status_reason":"临近检查节点，但必要报价尚未收到。","owner":"示例负责人","next_action":"追问缺失报价并确认回复时间。","due":"2026-01-16T17:00:00+08:00","blocker":"等待供应商报价","decision":"报价到达后选择供应商","done_criteria":"供应商已选定，并记录价格与交付日期","check_date":"2026-01-15","links":[]},{"id":"sample-life-project","space":"life","name":"示例生活项目","summary":"用于展示模板结构的中性示例，正式部署时必须替换。","status":"yellow","status_reason":"等待范围明确，并且已有下次检查日期。","owner":"示例用户","next_action":"确认周末活动的时间和地点。","due":"2026-01-17T12:00:00+08:00","blocker":"none","decision":"从两个候选时间中选择一个","done_criteria":"时间和地点达成一致","check_date":"2026-01-15","links":[]}],"upcoming":[{"date":"2026-01-16","time":"10:00","title":"示例项目检查会","project_id":"sample-work-project","confirmed":true}],"updated_at":"2026-01-15T08:30:00+08:00"};
+  const data = {"profile":{"name":"示例用户","timezone":"Asia/Shanghai","check_in_time":"09:00","wake_time":"07:30","sleep_time":"23:30"},"today":{"core_result":{"title":"确认上线清单","project_id":"sample-work-project","due":"2026-01-15T12:00:00+08:00","duration_minutes":60,"done_criteria":"清单通过审核并确认所有负责人"},"important_pushes":[{"title":"追问缺失的供应商报价","project_id":"sample-work-project","due":"2026-01-15T15:00:00+08:00","duration_minutes":20,"done_criteria":"供应商确认收到请求并给出回复时间"},{"title":"确认周末家庭安排","project_id":"sample-life-project","due":"2026-01-15T18:00:00+08:00","duration_minutes":15,"done_criteria":"时间和地点达成一致"}],"buffer_percent":30},"projects":[{"id":"sample-work-project","space":"work","name":"示例工作项目","summary":"用于展示模板结构的中性示例，正式部署时必须替换。","status":"red","status_reason":"临近检查节点，但必要报价尚未收到。","owner":"示例负责人","next_action":"追问缺失报价并确认回复时间。","due":"2026-01-16T17:00:00+08:00","blocker":"等待供应商报价","decision":"报价到达后选择供应商","done_criteria":"供应商已选定，并记录价格与交付日期","check_date":"2026-01-15","links":[]},{"id":"sample-life-project","space":"life","name":"示例生活项目","summary":"用于展示模板结构的中性示例，正式部署时必须替换。","status":"yellow","status_reason":"等待范围明确，并且已有下次检查日期。","owner":"示例用户","next_action":"确认周末活动的时间和地点。","due":"2026-01-17T12:00:00+08:00","blocker":"none","decision":"从两个候选时间中选择一个","done_criteria":"时间和地点达成一致","check_date":"2026-01-15","links":[]}],"upcoming":[{"date":"2026-01-16","time":"10:00","title":"示例项目检查会","project_id":"sample-work-project","confirmed":true}],"collaboration":{"enabled":true,"member_id":"example-user","center_status":"connected","last_sync_at":"2026-01-15T08:25:00+08:00","outbound_status_mode":"confirm_each"},"shared_tasks":[{"schema_version":1,"id":"task-example-team-check","title":"确认共享任务验收时间","assigner_id":"example-manager","assignee_id":"example-user","project_id":"none","safe_context":"仅包含协调信息的中性示例，正式部署时必须替换。","priority":"medium","status":"assigned","health":"yellow","status_reason":"任务已派发，等待负责人确认执行时间。","due":"2026-01-16T18:00:00+08:00","next_action":"确认可执行时间并反馈状态。","blocker":"none","done_criteria":"执行时间、负责人和下一动作已确认。","check_date":"2026-01-15","source_reference":"TEAM-TASK-001","safe_evidence":"none","confidentiality":"coordination_only","revision":1,"updated_at":"2026-01-15T08:25:00+08:00","updated_by":"example-manager"}],"updated_at":"2026-01-15T08:30:00+08:00"};
   const cleanText = (value, fallback = '') => {
     if (value === null || value === undefined || value === '') return fallback;
     return String(value);
@@ -1190,7 +1192,11 @@ html>body{padding:0}</style>
     const time = `${String(parsed.getHours()).padStart(2, '0')}:${String(parsed.getMinutes()).padStart(2, '0')}`;
     return `${parsed.getMonth() + 1}/${parsed.getDate()} ${time}`;
   };
-  const projectSpaceById = Object.fromEntries(data.projects.map((project) => [project.id, project.space]));
+  const sharedTasks = data.shared_tasks || [];
+  const projectSpaceById = Object.fromEntries([
+    ...data.projects.map((project) => [project.id, project.space]),
+    ...sharedTasks.map((task) => [task.id, 'team']),
+  ]);
   const planItems = [
     ...(data.today.core_result ? [{ ...data.today.core_result, planType: '核心结果' }] : []),
     ...(data.today.important_pushes || []).map((item) => ({ ...item, planType: '重要推进' })),
@@ -1214,6 +1220,25 @@ html>body{padding:0}</style>
     due: project.due,
     checkDate: project.check_date,
     links: project.links || [],
+  });
+  const toSharedTask = (task) => ({
+    id: task.id,
+    name: task.title,
+    status: task.health,
+    statusReason: task.status_reason,
+    state: `${task.status} · ${task.due === 'TBD' ? '节点待确认' : `截止 ${formatDateTime(task.due)}`}`,
+    owner: `${task.assigner_id} → ${task.assignee_id}`,
+    next: task.next_action,
+    goal: task.safe_context,
+    blocker: task.blocker === 'none' ? '无' : task.blocker,
+    decision: '无',
+    done: task.done_criteria,
+    due: task.due,
+    checkDate: task.check_date,
+    links: [],
+    safeEvidence: task.safe_evidence,
+    sourceReference: task.source_reference,
+    isSharedTask: true,
   });
   const todosFor = (spaceId) => planItems
     .filter((item) => projectSpaceById[item.project_id] === spaceId)
@@ -1241,6 +1266,14 @@ html>body{padding:0}</style>
       todos: todosFor('life'),
       coming: comingFor('life'),
     },
+    team: {
+      title: '团队任务',
+      navTitle: '共享协作空间',
+      subtitle: '来自私有 GitHub 共享事实中心的脱敏任务信封',
+      projects: sharedTasks.map(toSharedTask),
+      todos: sharedTasks.filter((task) => !['done', 'declined'].includes(task.status)).map((task) => ({ title: task.title, meta: `${task.status} · ${formatDateTime(task.due)}` })),
+      coming: sharedTasks.filter((task) => task.due !== 'TBD').map((task) => ({ date: formatDate(task.due), title: `${task.status} · ${task.title}` })),
+    },
   };
   const linkIcon = (kind) => {
     const normalized = cleanText(kind).toLowerCase();
@@ -1249,7 +1282,7 @@ html>body{padding:0}</style>
     if (normalized.includes('workflow')) return 'workflow';
     return 'link';
   };
-  const projectExtras = Object.fromEntries(data.projects.map((project) => [project.id, {
+  const projectExtras = Object.fromEntries([...data.projects.map((project) => [project.id, {
     overview: project.summary,
     milestone: `截止：${formatDateTime(project.due)} · 下次检查：${formatDate(project.check_date)}${project.decision && project.decision !== 'none' ? ` · 待决策：${project.decision}` : ''}`,
     resources: (project.links || []).map((link) => ({
@@ -1258,7 +1291,11 @@ html>body{padding:0}</style>
       icon: linkIcon(link.kind),
       url: link.url,
     })),
-  }]));
+  }]), ...sharedTasks.map((task) => [task.id, {
+    overview: task.safe_context,
+    milestone: `截止：${formatDateTime(task.due)} · 下次检查：${formatDate(task.check_date)} · 安全证据：${task.safe_evidence}`,
+    resources: [],
+  }])]);
   const events = confirmedUpcoming.map((item) => ({
     date: item.date,
     title: item.title,
@@ -1266,7 +1303,7 @@ html>body{padding:0}</style>
     category: projectSpaceById[item.project_id] || 'work',
   }));
   let activeView = 'dashboard';
-  let activeSpace = spaces.work.projects.length ? 'work' : 'life';
+  let activeSpace = spaces.work.projects.length ? 'work' : spaces.life.projects.length ? 'life' : 'team';
   let selectedProjectId = spaces[activeSpace].projects[0]?.id || '';
   const referenceDate = new Date(data.updated_at || Date.now());
   const safeReferenceDate = Number.isNaN(referenceDate.getTime()) ? new Date() : referenceDate;
@@ -1309,7 +1346,7 @@ html>body{padding:0}</style>
     }
   }
   function keyOf(date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; }
-  function colorFor(category) { return category === 'work' ? 'var(--canvas-work)' : 'var(--canvas-life)'; }
+  function colorFor(category) { return category === 'work' ? 'var(--canvas-work)' : category === 'life' ? 'var(--canvas-life)' : 'var(--canvas-link)'; }
   async function copyText(text, area) {
     let copied = false;
     if (navigator.clipboard && navigator.clipboard.writeText) { try { await navigator.clipboard.writeText(text); copied = true; } catch (error) { copied = false; } }
@@ -1331,6 +1368,7 @@ html>body{padding:0}</style>
     root.querySelector('#clms-avatar').textContent = cleanText(data.profile.name, 'U').trim().charAt(0).toUpperCase() || 'U';
     root.querySelector('#clms-work-count').textContent = `${spaces.work.projects.length} 个项目`;
     root.querySelector('#clms-life-count').textContent = `${spaces.life.projects.length} 个项目`;
+    root.querySelector('#clms-team-count').textContent = `${spaces.team.projects.length} 个任务`;
     const dashboardUpcoming = root.querySelector('#clms-dashboard-upcoming-list');
     dashboardUpcoming.innerHTML = confirmedUpcoming.length ? confirmedUpcoming.slice(0, 5).map((item) => `<div class="clms-coming"><span class="clms-date">${escapeHtml(formatDate(item.date))}</span><span class="clms-coming-title">${escapeHtml(`${item.time || '待定'} ${item.title}`)}</span></div>`).join('') : '<div class="clms-todo-meta">暂无已确认日程</div>';
     const dashboardActions = root.querySelector('#clms-dashboard-actions');
@@ -1360,19 +1398,19 @@ html>body{padding:0}</style>
     root.querySelector('#clms-calendar-view').hidden = true;
     root.querySelectorAll('[data-view]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.view === spaceId)));
     root.querySelector('#clms-breadcrumb').textContent = `/ ${spaces[spaceId].navTitle} / ${project.name}`;
-    root.querySelector('#clms-project-back-label').textContent = `返回${spaces[spaceId].title}项目`;
+    root.querySelector('#clms-project-back-label').textContent = spaceId === 'team' ? '返回团队任务' : `返回${spaces[spaceId].title}项目`;
     renderProjectPage();
   }
   function show(view, projectId) {
     activeView = view;
     root.querySelector('#clms-dashboard-view').hidden = view !== 'dashboard';
-    root.querySelector('#clms-course-view').hidden = view !== 'work' && view !== 'life';
+    root.querySelector('#clms-course-view').hidden = !['work', 'life', 'team'].includes(view);
     root.querySelector('#clms-project-view').hidden = true;
     root.querySelector('#clms-calendar-view').hidden = view !== 'calendar';
     root.querySelectorAll('[data-view]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
     root.querySelector('#clms-breadcrumb').textContent = view === 'dashboard' ? '/ 工作台' : view === 'calendar' ? '/ 日历' : `/ ${spaces[view].navTitle}`;
     if (view === 'dashboard') renderDashboard();
-    if (view === 'work' || view === 'life') {
+    if (['work', 'life', 'team'].includes(view)) {
       activeSpace = view;
       selectedProjectId = projectId || sortProjectsByStatus(spaces[view].projects)[0]?.id || '';
       renderCourse();
@@ -1385,6 +1423,7 @@ html>body{padding:0}</style>
     root.querySelector('#clms-course-nav-title').textContent = space.navTitle;
     root.querySelector('#clms-course-title').textContent = space.title;
     root.querySelector('#clms-course-subtitle').textContent = space.subtitle;
+    root.querySelector('#clms-module-label').textContent = activeSpace === 'team' ? '任务列表' : '项目模块';
     root.querySelector('#clms-module-count').textContent = `${space.projects.length} 项`;
     const local = root.querySelector('#clms-local-nav'); local.innerHTML = '';
     const list = root.querySelector('#clms-module-list'); list.innerHTML = '';
@@ -1401,15 +1440,17 @@ html>body{padding:0}</style>
     const project = spaces[activeSpace].projects.find((item) => item.id === selectedProjectId);
     const extra = projectExtras[project.id] || {};
     const resources = extra.resources || [];
-    const resourcesHtml = resources.length ? resources.map((resource) => {
+    const resourcesHtml = project.isSharedTask ? '<div class="clms-todo-meta">共享中心只保存脱敏协调字段，不接受公司文件、内部链接、邮件、客户信息、代码或聊天内容。</div>' : resources.length ? resources.map((resource) => {
       const isLocal = resource.url.startsWith('file:');
       const target = isLocal ? '_top' : '_blank';
       const openMode = isLocal ? '当前标签页打开' : '新标签页打开';
       return `<a class="clms-resource-link" href="${escapeHtml(safeResourceUrl(resource.url))}" target="${target}" rel="noopener noreferrer"><i data-lucide="${escapeHtml(resource.icon || 'link')}" aria-hidden="true"></i><span>${escapeHtml(resource.title)}<span class="clms-resource-link-meta">${escapeHtml(resource.meta)} · ${openMode}</span></span><i data-lucide="${isLocal ? 'file-up' : 'external-link'}" aria-hidden="true"></i></a>`;
     }).join('') : `<div class="clms-todo-meta">暂无已关联资料；后续提供 Google Drive、GitHub 或文件链接后会自动补入。</div>`;
-    const prompt = `我要更新“${project.name}”项目。当前状态是${statusMeta[project.status].label}，原因：${project.statusReason}。请依次问我：最新进展、下一步、负责人、计划完成时间、阻塞、待决策事项和今天新增变化；根据回答自动重新判定红黄绿状态，说明证据与变色原因，然后更新每日进度台账并重排未来 3 天。`;
+    const prompt = project.isSharedTask
+      ? `我要更新共享任务“${project.name}”。当前状态是${statusMeta[project.status].label}，原因：${project.statusReason}。请只整理负责人、截止时间、状态、下一动作、阻塞、完成标准和脱敏证据；不要读取或上传公司文件、邮件、客户信息、内部链接或聊天内容。向私有 GitHub 共享事实中心发布前，先展示完整任务信封并等待我明确确认。`
+      : `我要更新“${project.name}”项目。当前状态是${statusMeta[project.status].label}，原因：${project.statusReason}。请依次问我：最新进展、下一步、负责人、计划完成时间、阻塞、待决策事项和今天新增变化；根据回答自动重新判定红黄绿状态，说明证据与变色原因，然后更新每日进度台账并重排未来 3 天。`;
     const detail = root.querySelector('#clms-project-page-detail');
-    detail.innerHTML = `<div class="clms-detail-head"><h2>${escapeHtml(project.name)}</h2><div class="clms-detail-meta">负责人：${escapeHtml(project.owner)} · ${escapeHtml(project.state)}</div><div class="clms-detail-status" style="--status-color:${statusMeta[project.status].color}"><span class="clms-status-dot"></span>${statusMeta[project.status].label}：${escapeHtml(project.statusReason)}</div></div><section class="clms-detail-section"><h3>项目概览</h3><div>${escapeHtml(extra.overview || project.goal)}</div></section><div class="clms-detail-body"><div><div class="clms-detail-label">核心结果</div><div>${escapeHtml(project.goal)}</div></div><div><div class="clms-detail-label">下一动作</div><div>${escapeHtml(project.next)}</div></div><div><div class="clms-detail-label">关键节点</div><div>${escapeHtml(extra.milestone || project.next)}</div></div><div><div class="clms-detail-label">当前阻塞</div><div>${escapeHtml(project.blocker)}</div></div><div><div class="clms-detail-label">完成标准</div><div>${escapeHtml(project.done)}</div></div><div><div class="clms-detail-label">负责人</div><div>${escapeHtml(project.owner)}</div></div></div><section class="clms-detail-section"><h3>相关资料</h3><div class="clms-resource-list">${resourcesHtml}</div></section><button class="clms-secondary-button" type="button" id="clms-report-project">汇报这个项目的最新变化</button><div class="clms-report-fallback" id="clms-report-fallback" hidden><textarea id="clms-report-text" readonly></textarea><button class="clms-secondary-button" type="button" id="clms-copy-report">复制汇报内容</button><div class="clms-status" id="clms-report-status"></div></div>`;
+    detail.innerHTML = `<div class="clms-detail-head"><h2>${escapeHtml(project.name)}</h2><div class="clms-detail-meta">负责人：${escapeHtml(project.owner)} · ${escapeHtml(project.state)}</div><div class="clms-detail-status" style="--status-color:${statusMeta[project.status].color}"><span class="clms-status-dot"></span>${statusMeta[project.status].label}：${escapeHtml(project.statusReason)}</div></div><section class="clms-detail-section"><h3>${project.isSharedTask ? '任务概览' : '项目概览'}</h3><div>${escapeHtml(extra.overview || project.goal)}</div></section><div class="clms-detail-body"><div><div class="clms-detail-label">核心结果</div><div>${escapeHtml(project.goal)}</div></div><div><div class="clms-detail-label">下一动作</div><div>${escapeHtml(project.next)}</div></div><div><div class="clms-detail-label">关键节点</div><div>${escapeHtml(extra.milestone || project.next)}</div></div><div><div class="clms-detail-label">当前阻塞</div><div>${escapeHtml(project.blocker)}</div></div><div><div class="clms-detail-label">完成标准</div><div>${escapeHtml(project.done)}</div></div><div><div class="clms-detail-label">负责人</div><div>${escapeHtml(project.owner)}</div></div></div><section class="clms-detail-section"><h3>${project.isSharedTask ? '数据边界' : '相关资料'}</h3><div class="clms-resource-list">${resourcesHtml}</div></section><button class="clms-secondary-button" type="button" id="clms-report-project">${project.isSharedTask ? '更新这个共享任务' : '汇报这个项目的最新变化'}</button><div class="clms-report-fallback" id="clms-report-fallback" hidden><textarea id="clms-report-text" readonly></textarea><button class="clms-secondary-button" type="button" id="clms-copy-report">复制汇报内容</button><div class="clms-status" id="clms-report-status"></div></div>`;
     const fallback = detail.querySelector('#clms-report-fallback'); const area = detail.querySelector('#clms-report-text'); const status = detail.querySelector('#clms-report-status'); area.value = prompt;
     detail.querySelector('#clms-report-project').addEventListener('click', async () => { if (window.openai && window.openai.sendFollowUpMessage) { await window.openai.sendFollowUpMessage({ prompt, title: `更新${project.name}` }); return; } fallback.hidden = false; const copied = await copyText(prompt, area); status.textContent = copied ? '已复制，请回到对话粘贴发送。' : '请复制上方内容后回到对话发送。'; });
     detail.querySelector('#clms-copy-report').addEventListener('click', async () => { const copied = await copyText(prompt, area); status.textContent = copied ? '已复制。' : '请手动复制。'; });

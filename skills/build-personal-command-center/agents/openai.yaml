@@ -1,4 +1,4 @@
 interface:
   display_name: "Personal Command Center"
-  short_description: "Deploy and maintain a private AI personal workbench"
-  default_prompt: "Use $build-personal-command-center to deploy my private workbench and guide me through onboarding."
+  short_description: "Deploy a private workbench with safe team task sharing"
+  default_prompt: "Use $build-personal-command-center to deploy my private workbench with its private GitHub shared task center."
