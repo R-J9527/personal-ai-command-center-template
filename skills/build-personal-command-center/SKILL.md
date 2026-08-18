@@ -41,6 +41,7 @@ Use `data/workbench.json` as the operational source and `outputs/daily-ledger.md
 5. Record every waiting item as: waiting for whom, waiting for what, next check, and default action if no reply.
 6. Update JSON, snapshot, ledger, and dashboard together.
 7. Treat external reminder or calendar writes as a separate explicit action. Dry-run when supported and report only verified writes.
+8. When recurring automation is requested, read the repository-root `AUTOMATION_SETUP.md`. Keep active schedules, platform bindings, device permissions, and credentials outside the template repository.
 
 ## Guardrails
 
@@ -56,3 +57,4 @@ Use `data/workbench.json` as the operational source and `outputs/daily-ledger.md
 - Copy templates from `assets/` into a new user's workspace.
 - Run `scripts/render_workbench.py` after every structured data change.
 - Read the two references only when deploying or changing operating logic.
+- Use the repository-root `AUTOMATION_SETUP.md` when creating or migrating recurring tasks and notification integrations.

@@ -13,6 +13,8 @@ Give your AI coding assistant this repository and paste the contents of [`DEPLOY
 3. Generate a Canvas-style dashboard.
 4. Configure a daily review protocol and optional reminders supported by the device.
 
+The repository does not carry an active recurring task. Read [`AUTOMATION_SETUP.md`](AUTOMATION_SETUP.md) to create and verify instance-specific scheduling, notifications, and reminder/calendar integrations.
+
 For Codex, install or invoke the skill in [`skills/build-personal-command-center`](skills/build-personal-command-center/SKILL.md).
 
 ## Design principles
@@ -22,6 +24,7 @@ For Codex, install or invoke the skill in [`skills/build-personal-command-center
 - Evidence-based status: green means verified progress, yellow means bounded waiting, and red means intervention is required.
 - Independent ownership: template updates never overwrite a user's private workspace.
 - No silent sync claims: reminders and calendars are only reported as synchronized after a real dry run and write succeeds.
+- Portable rules, private execution: automation schedules, platform bindings, device permissions, and credentials remain outside the template.
 
 ## Privacy
 
