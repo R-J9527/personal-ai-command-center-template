@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coordination-only task envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "title", "assigner_id", "assignee_id", "project_id", "safe_context", "priority", "status", "health", "status_reason", "due", "next_action", "blocker", "done_criteria", "check_date", "source_reference", "safe_evidence", "confidentiality", "revision", "updated_at", "updated_by"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 1},
+    "assigner_id": {"type": "string", "minLength": 1},
+    "assignee_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "safe_context": {"type": "string", "minLength": 1},
+    "priority": {"enum": ["high", "medium", "low"]},
+    "status": {"enum": ["assigned", "accepted", "in_progress", "waiting", "done", "declined"]},
+    "health": {"enum": ["red", "yellow", "green"]},
+    "status_reason": {"type": "string", "minLength": 1},
+    "due": {"type": "string", "minLength": 1},
+    "next_action": {"type": "string", "minLength": 1},
+    "blocker": {"type": "string", "minLength": 1},
+    "done_criteria": {"type": "string", "minLength": 1},
+    "check_date": {"type": "string", "minLength": 1},
+    "source_reference": {"type": "string", "pattern": "^(none|[A-Za-z0-9][A-Za-z0-9._-]{0,63})$"},
+    "safe_evidence": {"type": "string", "minLength": 1},
+    "confidentiality": {"const": "coordination_only"},
+    "revision": {"type": "integer", "minimum": 1},
+    "updated_at": {"type": "string", "minLength": 1},
+    "updated_by": {"type": "string", "minLength": 1}
+  }
+}
