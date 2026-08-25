@@ -39,6 +39,7 @@ env/
 workspace/
 .workspace/
 local_data/
+/AI资料箱/
 
 # Environment variables
 .env
