@@ -5,6 +5,22 @@
 - `personal_only`: independent personal workbench without team assignments.
 - `personal_plus_shared`: personal workbench plus a private GitHub shared fact center. Use this mode when a manager must assign tasks that appear in another member's workbench.
 
+## Backend providers
+
+- `github_checkout`: current demo provider. It reads validated JSON envelopes
+  from a private local GitHub checkout.
+- `supabase`: staged API provider. It reads the same envelope shape from the
+  RLS-protected `task_envelopes` view. Use only after the two-user isolation
+  acceptance in `backend/supabase/acceptance.md` passes.
+
+For the current two-person Demo, Supabase Cloud Free is the selected destination.
+The binding scope, credential rules, external-action approval gate, and GitHub
+fallback condition are recorded in `backend/supabase/decision-record.md`.
+
+Do not silently switch a deployed owner between providers. Keep GitHub available
+as the rollback path until the Supabase read, receipt, status update, and audit
+tests all pass.
+
 ## Required components for `personal_plus_shared`
 
 1. A private shared-center GitHub repository created from `assets/shared-center-template/`.
@@ -27,6 +43,13 @@
 ## Read path
 
 Fetch the private shared center, validate all envelopes, filter tasks by `assignee_id`, import only matching tasks, and render. Reject the entire import if validation fails.
+
+For the staged Supabase provider, keep the project URL and environment-variable
+names only in private config, keep all credential values in process environment
+variables or the operating-system credential store, query through the
+authenticated user's token, validate the returned envelopes again locally, and
+then render. Never expose `service_role` to a browser client. RLS is mandatory
+and is not replaced by the client-side member filter.
 
 ## Write path
 

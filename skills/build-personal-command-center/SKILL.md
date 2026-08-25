@@ -33,13 +33,25 @@ python3 scripts/render_workbench.py \
 
 ## Connect a private shared center
 
-1. Verify GitHub access and obtain the private shared-center repository URL and stable member ID.
-2. If the center does not exist and the user authorizes creation, initialize a separate private repository from `assets/shared-center-template/`.
-3. Create private `config/shared-center.json` from the example and exclude it from Git.
-4. Copy `scripts/import_shared_tasks.py` into the deployed workspace.
-5. Validate and import with `--dry-run`, repeat without `--dry-run`, then rerender the dashboard.
-6. Verify the Team view contains only assignments whose `assignee_id` matches the deployed member.
-7. Keep outbound status at `confirm_each`; never publish company-account information automatically.
+1. Confirm the backend provider and stable member ID. For the current two-person
+   Demo, follow the binding Supabase Cloud Free scope and external-action
+   approval gate in `../../backend/supabase/decision-record.md`. Keep
+   `github_checkout` operating until the Supabase two-user acceptance checklist
+   passes, and do not remove it without a separate explicit product decision.
+2. For `github_checkout`, verify GitHub access and obtain the private
+   shared-center repository URL.
+3. If the GitHub center does not exist and the user authorizes creation,
+   initialize a separate private repository from `assets/shared-center-template/`.
+4. Create private `config/shared-center.json` from the matching provider example
+   and exclude it from Git.
+5. Copy `scripts/import_shared_tasks.py` for GitHub or
+   `scripts/import_supabase_tasks.py` for the staged Supabase provider.
+6. Validate and import with `--dry-run`, repeat without `--dry-run`, then rerender
+   the dashboard.
+7. Verify the Team view contains only assignments whose `assignee_id` matches
+   the deployed member.
+8. Keep outbound status at `confirm_each`; never publish company-account
+   information automatically.
 
 ## Operate daily
 

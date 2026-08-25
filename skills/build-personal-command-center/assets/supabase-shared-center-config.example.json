@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "provider": "supabase",
+  "member_id": "replace-with-member-id",
+  "supabase_url": "https://replace-with-project-ref.supabase.co",
+  "publishable_key_env": "SUPABASE_PUBLISHABLE_KEY",
+  "access_token_env": "SUPABASE_ACCESS_TOKEN",
+  "outbound_status_mode": "confirm_each"
+}

@@ -2,11 +2,25 @@
 
 A private, reusable personal workbench that turns natural-language check-ins into structured projects, daily priorities, follow-ups, and a Canvas-style dashboard. It can also deploy with a private GitHub shared fact center so assignments from another member appear directly in the Team view.
 
+The team backend is being adapted behind a provider boundary. Supabase Cloud Free
+is the approved shared data and communication center for the two-person Demo;
+`backend/supabase/` contains its staged migration, read adapter, acceptance list,
+and binding decision record. The existing GitHub JSON channel remains mandatory
+until the real two-account Supabase authorization and full-loop acceptance pass.
+This keeps the personal interface and business rules independent from either
+backend during validation.
+
 This repository contains no personal data. Each deployment creates a separate local workspace for its owner.
 
 ## Quick start
 
 To preview the complete Canvas-style interface after downloading the repository, open [`demo/personal-command-center.html`](demo/personal-command-center.html). It contains neutral example data only.
+
+The test Demo also includes an optional local AI gateway. It supports guided
+questions, user-confirmed Markdown reading, and confirmed project changes that
+write only to the git-ignored local test copy in `workspace/real-workbench.json`.
+See [`backend/openai-gateway.md`](backend/openai-gateway.md). Never place an API
+key in the HTML, repository, or an ordinary configuration file.
 
 Give your AI coding assistant this repository and paste the contents of [`DEPLOY_PROMPT.md`](DEPLOY_PROMPT.md). The assistant will:
 
